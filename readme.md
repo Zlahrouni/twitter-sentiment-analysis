@@ -6,7 +6,8 @@ A sentiment analysis model for French tweets using logistic regression.
 ```
 ├── docker/
 │   ├── docker-compose.yml     # MySQL container configuration
-│   └── init.sql              # Database initialization
+│   ├── init.sql              # Database initialization
+│   └── dataset.py            # Dataset creation script
 ├── models.py                 # Base model without database
 ├── models_with_db.py         # Model with database integration
 └── requirements.txt
@@ -19,21 +20,20 @@ A sentiment analysis model for French tweets using logistic regression.
 pip install -r requirements.txt
 ```
 
-2. MySQL Database
+2. MySQL Database and Insert Data
 ```bash
 cd docker
 docker-compose up -d
+python dataset.py
+cd ..
 ```
 
-## Usage
-
-### Train Model (Without Database)
+3. Train Model (Choose one)
 ```bash
+# Without Database
 python models.py
-```
 
-### Train Model (With Database)
-```bash
+# With Database
 python models_with_db.py
 ```
 
