@@ -60,7 +60,7 @@ if __name__ == "__main__":
     vectorizer, model_positive, model_negative = train_models()
     
     test_tweets = [
-        # Positive tweets
+        # Positive tweets for test
         "Holy shit this new album is fucking incredible! Best thing I've heard all year 🔥",
         "LETS FUCKING GOOO! We destroyed them in the finals, absolutely demolished! 🏆",
         "This weed is straight fire, got me high af 🌿",
