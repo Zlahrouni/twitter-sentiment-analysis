@@ -1,51 +1,48 @@
 # Twitter Sentiment Analysis
 
-A sentiment analysis model for tweets using logistic regression, supporting both French and English datasets.
+A sentiment analysis model for tweets using logistic regression, with logging and model persistence.
 
 ## Project Structure
 ```
-├── docker/
+├── docker/                   # Docker configuration
 │   ├── docker-compose.yml    # MySQL container configuration
-│   ├── init.sql              # Database initialization
-│   ├── dataset.py            # French dataset creation script
-│   ├── dataset_en.py         # English dataset creation script (from csv)
-│   └── english_tweets.csv    # English tweets dataset
-├── models.py                 # Base model without database
-├── models_with_db.py         # French model with database
-├── models_with_db_en.py      # English model with database
+│   ├── init.sql             # Database initialization
+│   ├── datasets.py          # French dataset creation script
+│   ├── dataset_en.py        # English dataset creation script
+│   └── english_tweets.csv   # English dataset
+├── models/                   # Saved model files
+├── reports/                  # Training logs and metrics
+├── logging_utils.py         # Logging functionality
+├── models_train.py          # Model training script
 └── requirements.txt
 ```
 
 ## Installation
 
-1. Python Dependencies
+1. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-2. MySQL Database Setup
+2. Setup MySQL database:
 ```bash
 cd docker
 docker-compose up -d
 ```
 
-3. Choose Dataset to Import
+3. Import dataset:
 ```bash
-# For French dataset
-python dataset.py
-
-# For English dataset
 python dataset_en.py
 ```
 
-4. Train Model
+4. Train models:
 ```bash
-# French Model with Database
-python models_with_db.py
-
-# English Model with Database
-python models_with_db_en.py
+python models_train.py
 ```
+
+Training outputs:
+- Models saved in `models/` directory
+- Training metrics and logs in `reports/` directory
 
 ### Database Commands
 
@@ -65,10 +62,9 @@ docker-compose down -v
 ```
 
 ## Features
-- Multilingual tweet sentiment classification (French/English)
+- English tweet sentiment classification
 - Binary sentiment scoring (positive/negative)
+- Automated model training metrics logging
+- Model persistence
 - MySQL database integration
 - Docker containerization
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first.
