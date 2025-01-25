@@ -34,8 +34,15 @@ def train_models():
             "this", "that", "these", "those", "i", "you", "he", "she", "it", "we", "they"
         ]
 
+        french_stopwords = [
+            "le", "la", "les", "un", "une", "des", "et", "ou", "mais", "dans", "sur", 
+            "à", "de", "pour", "avec", "ce", "cette", "ces", "je", "tu", "il", "elle", 
+            "on", "nous", "vous", "ils", "elles", "y", "en", "qui", "que", "quoi", "dont"
+        ]
+
         vectorizer = TfidfVectorizer(
-            stop_words=english_stopwords,
+            #stop_words=english_stopwords,
+            stop_words=french_stopwords,
             ngram_range=(1, 2),
             max_features=500
         )
