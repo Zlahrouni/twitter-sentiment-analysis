@@ -1,15 +1,18 @@
 # Twitter Sentiment Analysis
 
-A sentiment analysis model for French tweets using logistic regression.
+A sentiment analysis model for tweets using logistic regression, supporting both French and English datasets.
 
 ## Project Structure
 ```
 ├── docker/
-│   ├── docker-compose.yml     # MySQL container configuration
+│   ├── docker-compose.yml    # MySQL container configuration
 │   ├── init.sql              # Database initialization
-│   └── dataset.py            # Dataset creation script
+│   ├── dataset.py            # French dataset creation script
+│   ├── dataset_en.py         # English dataset creation script (from csv)
+│   └── english_tweets.csv    # English tweets dataset
 ├── models.py                 # Base model without database
-├── models_with_db.py         # Model with database integration
+├── models_with_db.py         # French model with database
+├── models_with_db_en.py      # English model with database
 └── requirements.txt
 ```
 
@@ -20,21 +23,28 @@ A sentiment analysis model for French tweets using logistic regression.
 pip install -r requirements.txt
 ```
 
-2. MySQL Database and Insert Data
+2. MySQL Database Setup
 ```bash
 cd docker
 docker-compose up -d
-python dataset.py
-cd ..
 ```
 
-3. Train Model (Choose one)
+3. Choose Dataset to Import
 ```bash
-# Without Database
-python models.py
+# For French dataset
+python dataset.py
 
-# With Database
+# For English dataset
+python dataset_en.py
+```
+
+4. Train Model
+```bash
+# French Model with Database
 python models_with_db.py
+
+# English Model with Database
+python models_with_db_en.py
 ```
 
 ### Database Commands
@@ -49,16 +59,16 @@ Clear data:
 docker exec -it docker-db-1 mysql -uroot -prootpassword sentiment_analysis -e "DELETE FROM tweets;"
 ```
 
-Remove containers and volumes:
+Remove containers:
 ```bash
 docker-compose down -v
 ```
 
 ## Features
-- French tweet sentiment classification
-- Differentiated scoring (very positive, somewhat positive, somewhat negative, very negative)
+- Multilingual tweet sentiment classification (French/English)
+- Binary sentiment scoring (positive/negative)
 - MySQL database integration
 - Docker containerization
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome. For major changes, please open an issue first.
