@@ -1,0 +1,33 @@
+2025-01-25 12:06:15,655 - INFO - Successfully fetched 20963 records from database
+2025-01-25 12:06:16,385 - INFO - Successfully trained Positive Sentiment model
+2025-01-25 12:06:16,394 - INFO - 
+Positive Model - Classification Report:
+              precision    recall  f1-score   support
+
+         0.0       0.88      0.86      0.87      3648
+         1.0       0.70      0.74      0.72      1593
+
+    accuracy                           0.82      5241
+   macro avg       0.79      0.80      0.79      5241
+weighted avg       0.83      0.82      0.82      5241
+
+2025-01-25 12:06:16,394 - INFO - 
+Positive Model - Confusion Matrix:
+[[3134  514]
+ [ 413 1180]]
+2025-01-25 12:06:16,423 - INFO - Successfully trained Negative Sentiment model
+2025-01-25 12:06:16,432 - INFO - 
+Negative Model - Classification Report:
+              precision    recall  f1-score   support
+
+         0.0       0.88      0.76      0.82      3746
+         1.0       0.55      0.73      0.63      1495
+
+    accuracy                           0.75      5241
+   macro avg       0.71      0.75      0.72      5241
+weighted avg       0.78      0.75      0.76      5241
+
+2025-01-25 12:06:16,432 - INFO - 
+Negative Model - Confusion Matrix:
+[[2865  881]
+ [ 404 1091]]
