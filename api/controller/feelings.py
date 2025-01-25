@@ -14,12 +14,10 @@ def check_feeling():
     """
     check vars env of check_feeling
     """
-
-    feeling_list = request.json.get('feeling')
-    if len(feeling_list) == 0:
+    new_tweets_list = request.json.get('new_tweets')
+    if len(new_tweets_list) == 0:
         raise ExternalValueError("feeling must be a defined")
-    if not isinstance(feeling_list, list):
+    if not isinstance(new_tweets_list, list):
         raise ExternalTypeError("feeling must be a list")
 
-
-    return checkFeeling(feeling=feeling_list)
+    return checkFeeling(new_tweets=new_tweets_list)

@@ -29,8 +29,7 @@ required_variables = [
     "MYSQL_DATABASE",
     "MYSQL_ROOT_PASSWORD",
     "MYSQL_USER",
-    "MYSQL_PASSWORD",
-    "MYSQL_ROOT_HOST",
+    "MYSQL_HOST"
 ]
 
 # all json env vars
@@ -59,11 +58,10 @@ from controller.feelings import ( # pylint: disable=wrong-import-position
 ### DATABASE ###
 # MYSQL 
 
+MYSQL_HOST = os.environ.get("MYSQL_HOST")
 MYSQL_DATABASE = os.environ.get("MYSQL_DATABASE")
 MYSQL_ROOT_PASSWORD = os.environ.get("MYSQL_ROOT_PASSWORD")
 MYSQL_USER = os.environ.get("MYSQL_USER")
-MYSQL_PASSWORD = os.environ.get("MYSQL_PASSWORD")
-MYSQL_ROOT_HOST = os.environ.get("MYSQL_ROOT_HOST")
 
 ### CONFIG ###
 ALLOW_ORIGIN = os.environ.get("ALLOW_ORIGIN").replace('\\"', '"')
@@ -84,9 +82,9 @@ def before_request_func():
     """
     if bdd.managers.MYSQL_CLIENT is None:
         bdd.managers.MYSQL_CLIENT = MySQLManager(
-            host="localhost",
+            host=MYSQL_HOST,
             user=MYSQL_USER, 
-            password=MYSQL_PASSWORD,
+            password=MYSQL_ROOT_PASSWORD,
             database=MYSQL_DATABASE
         )
         print("instanciate mysql manager")
