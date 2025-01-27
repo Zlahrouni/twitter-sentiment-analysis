@@ -32,11 +32,12 @@ docker-compose up -d
 
 3. Import dataset:
 ```bash
-python dataset_en.py
+python dataset.py
 ```
 
 4. Train models:
 ```bash
+cd ..
 python models_train.py
 ```
 
