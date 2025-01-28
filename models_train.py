@@ -6,7 +6,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from logging_utils import ModelTrainingLogger
-from sklearn.metrics import classification_report, confusion_matrix
 import os
 
 def get_data_from_db():
@@ -29,11 +28,6 @@ def train_models():
         logger.log_db_fetch(len(df))
         df['text_clean'] = df['text'].apply(clean_text)
 
-        english_stopwords = [
-            "the", "a", "an", "and", "or", "but", "in", "on", "at", "to", "for", "with",
-            "this", "that", "these", "those", "i", "you", "he", "she", "it", "we", "they"
-        ]
-
         french_stopwords = [
             "le", "la", "les", "un", "une", "des", "et", "ou", "mais", "dans", "sur", 
             "à", "de", "pour", "avec", "ce", "cette", "ces", "je", "tu", "il", "elle", 
@@ -41,7 +35,6 @@ def train_models():
         ]
 
         vectorizer = TfidfVectorizer(
-            #stop_words=english_stopwords,
             stop_words=french_stopwords,
             ngram_range=(1, 2),
             max_features=500
@@ -67,10 +60,11 @@ def train_models():
         y_pred_neg = model_negative.predict(X_test)
         logger.log_metrics('Negative Model', y_test_neg, y_pred_neg)
         
-        # Save models
+        # Save models and vectorizer
+        joblib.dump(vectorizer, 'models/vectorizer.joblib')
         joblib.dump(model_positive, 'models/model_positive.joblib')
         joblib.dump(model_negative, 'models/model_negative.joblib')
-        logger.logger.info("Models saved in 'models' directory")
+        logger.logger.info("Vectorizer and models saved in 'models' directory")
         
         print(f"\nTraining report saved at: {logger.log_file}")
         print("Models and vectorizer saved in 'models' directory")
