@@ -13,26 +13,36 @@ def random_date(start, end):
     random_second = random.randrange(int_delta)
     return start + timedelta(seconds=random_second)
 
+def insert_data(cursor, table_name, data):
+    """
+    Insert data into the specified table.
+    """
+    cursor.execute(f"DELETE FROM {table_name}")
+    insert_query = f"INSERT INTO {table_name} (text, positive, negative, created_at) VALUES (%s, %s, %s, %s)"
+    cursor.executemany(insert_query, data)
+
 def import_csv_to_db(csv_file):
-    # Read CSV and fill NaN values with 0
+    """
+    Import CSV file into MySQL database.
+    """
     df = pd.read_csv(csv_file)
     df = df.fillna(0)
     df = df.rename(columns={"label": "positive"})
     df["negative"] = df["positive"].replace({0: 1, 1: 0})
     df["created_at"] = None
+
+    # Split the dataset into training and live tweets, 95% and 5% respectively
     df, df_live = train_test_split(df, test_size=0.05, random_state=42)
 
-    
     now = datetime.now()
     start_date = now - timedelta(days=3650)
-
-    # start date for tweets = 10 years ago
-    yesterday = datetime.now() - timedelta(days=1)
-
-    # end date for live tweets in the future : 3 months in the future
+    yesterday = now - timedelta(days=1)
     final_date = now + timedelta(days=90)
 
+    # Generate random dates for the tweets: between 10 years ago and yesterday
     df["created_at"] = [random_date(start_date, yesterday) for _ in df.index]
+
+    # Generate random dates for the live tweets: between now and 3 months in the future
     df_live["created_at"] = [random_date(now, final_date) for _ in df_live.index]
 
     # Prepare data for bulk insert
@@ -49,32 +59,15 @@ def import_csv_to_db(csv_file):
     cursor = conn.cursor()
     
     try:
-        #____________________________
         # Insert training tweets
-        cursor.execute("DELETE FROM tweets")
-        
-        # Define the insert query
-        insert_query = "INSERT INTO tweets (text, positive, negative, created_at) VALUES (%s, %s, %s, %s)"
-        
-        # Execute bulk insert
-        cursor.executemany(insert_query, data)
-
+        insert_data(cursor, "tweets", data)
         conn.commit()
         print(f"Inserted {len(data)} tweets into database")
 
-        #____________________________
         # Insert live tweets
-
-        cursor.execute("DELETE FROM liveTweets")
-        
-        # Define the insert query
-        insert_query = "INSERT INTO liveTweets (text, positive, negative, created_at) VALUES (%s, %s, %s, %s)"
-        
-        # Execute bulk insert
-        cursor.executemany(insert_query, data_live)
-
+        insert_data(cursor, "liveTweets", data_live)
         conn.commit()
-        print(f"Inserted {len(data)} liveTweets into database")
+        print(f"Inserted {len(data_live)} liveTweets into database")
         
     except pymysql.MySQLError as e:
         print(f"MySQL Error: {e}")
