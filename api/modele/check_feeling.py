@@ -17,7 +17,7 @@ def get_sentiment_score(text, vectorizer, model_pos, model_neg):
    neg_proba = model_neg.predict_proba(text_vectorized)[0][1]
 
    score = (pos_proba - neg_proba)
-   return score
+   return score, pos_proba, neg_proba
 
 
 def check_feeling(new_tweets):
@@ -31,11 +31,13 @@ def check_feeling(new_tweets):
         "data" : []
     }
     for tweet in new_tweets:
-        score = get_sentiment_score(tweet, vectorizer, model_positive, model_negative)
+        score, pos_proba, neg_proba = get_sentiment_score(tweet, vectorizer, model_positive, model_negative)
 
         results["data"].append({
             "tweet": tweet,
-            "sentiment_score": round(float(score), 2)
+            "sentiment_score": round(float(score), 2),
+            "pos_proba": round(float(pos_proba), 2),
+            "neg_proba": round(float(neg_proba), 2),
         })
 
     return results

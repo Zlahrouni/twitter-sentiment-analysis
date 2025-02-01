@@ -8,16 +8,14 @@ from utils.errors.errors import (
     ExternalValueError
 )
 
-
-
 def check_feeling():
     """
     check vars env of check_feeling
     """
-    new_tweets_list = request.json.get('new_tweets')
+    new_tweets_list = request.json.get('new_tweets', [])
     if len(new_tweets_list) == 0:
-        raise ExternalValueError("feeling must be a defined")
+        raise ExternalValueError("new_tweets must be a defined")
     if not isinstance(new_tweets_list, list):
-        raise ExternalTypeError("feeling must be a list")
+        raise ExternalTypeError("new_tweets must be a list")
 
     return checkFeeling(new_tweets=new_tweets_list)

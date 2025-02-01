@@ -121,7 +121,7 @@ register_error_handlers(app, FORMAT_RESPONSE)
 register_mysql_error_handlers(app, FORMAT_RESPONSE)
 
 if __name__ == '__main__':
-    app.run(debug=DEBUG, host="0.0.0.0", port=8080)
+    app.run(debug=True, host="0.0.0.0", port=8080)
 else:
     gunicorn_logger = logging.getLogger("gunicorn.error")
     app.logger.handlers = gunicorn_logger.handlers
