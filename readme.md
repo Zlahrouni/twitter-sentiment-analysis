@@ -5,14 +5,44 @@ A sentiment analysis model for tweets using logistic regression, with logging an
 ## Project Structure
 
 ```
+├── api/                 
+│   ├── bdd    
+│   │     ├──__init__.py    
+│   │     ├──managers.py 
+│   │     └──mysql.py    
+│   ├── call_api         
+│   │     └──__init__.py 
+│   ├── controller       
+│   │     ├──__init__.py 
+│   │     └──feelings.py
+│   ├── modele           
+│   │     ├──__init__.py 
+│   │     └──check_feeling.py  
+│   ├── utils
+│   │     ├──error_handlers    
+│   │     |    ├──__init__.py
+│   │     |    ├──error_handlers.py
+│   │     |    └──mysql_error_handlers.py
+│   │     ├──errors 
+│   │     |    ├──__init__.py
+│   │     |    ├──errors.py
+│   │     |    └──mysql_errors.py
+│   │     ├──__init__.py 
+│   │     ├──check_env.py  
+│   │     ├──check_response.py  
+│   │     └──utils.py
+│   ├── app.py
+│   ├── requirements.txt
 ├── docker/                   # Docker configuration
 │   ├── docker-compose.yml    # MySQL container configuration
 │   ├── init.sql              # Database initialization
 │   ├── dataset.py            # French dataset creation script
 │   └── french_tweets.csv     # Dataset
-├── models/                   # Saved model files
+├── models/                   # Saved model files        
 ├── reports/                  # Training logs and metrics
+├── client_test.py
 ├── logging_utils.py          # Logging functionality
+├── models_retrain.py
 ├── models_train.py           # Model training script
 └── requirements.txt
 ```
@@ -59,6 +89,13 @@ cd ..
 python models_train.py
 ```
 
+5. Retrain models:
+
+```bash
+cd ..
+python models_retrain.py
+```
+
 Training outputs:
 
 - Models saved in `models/` directory
@@ -71,6 +108,7 @@ mettre le fichier .env dans la racine du projet
 aller dans le dossiers api
 
 installer les dependences "pip install -r requirements.txt"
+
 
 ### Database Commands
 
