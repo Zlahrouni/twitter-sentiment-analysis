@@ -14,41 +14,40 @@ class AutomatedTraining:
         self.setup_logging()
         self.scheduler = BackgroundScheduler()
         
-        # Configuration optimisée de la connexion MySQL
+        
         self.engine = create_engine(
             'mysql+pymysql://root:rootpassword@localhost/sentiment_analysis',
-            pool_size=5,                # Nombre de connexions dans le pool
-            max_overflow=10,            # Nombre maximal de connexions supplémentaires
-            pool_timeout=300,           # Temps d'attente pour obtenir une connexion
-            pool_recycle=3600,          # Recycler les connexions après 1 heure
+            pool_size=5,                
+            max_overflow=10,            
+            pool_timeout=300,         
+            pool_recycle=3600,          
             connect_args={
-                'connect_timeout': 300, # Timeout pour établir la connexion
-                'read_timeout': 300,   # Timeout pour les lectures
-                'write_timeout': 300    # Timeout pour les écritures
+                'connect_timeout': 300, 
+                'read_timeout': 300,  
+                'write_timeout': 300    
             }
         )
         
-        # Ajout du job hebdomadaire
+        
         self.scheduler.add_job(
             self.run_training,
-            trigger=CronTrigger(day_of_week='mon', hour=22, minute=40),
+            trigger=CronTrigger(day_of_week='tue', hour=10, minute=29),
             id='weekly_training',
             name='Weekly model retraining',
             replace_existing=True
         )
 
     def setup_logging(self):
-        """Configure le système de logging."""
-        if not os.path.exists('reports'):
-            os.makedirs('reports')
-            
+        """Configure le système de logging pour afficher dans la console."""
         logging.basicConfig(
-            filename='reports/automated_training.log',
             level=logging.INFO,
-            format='%(asctime)s - %(levelname)s - %(message)s'
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            handlers=[
+                logging.StreamHandler()  # Ceci affichera les logs dans la console
+            ]
         )
         self.logger = logging.getLogger(__name__)
-
+    
     def transfer_live_data(self):
         """Transfère les données de la table `liveTweets` vers `tweets` par lots."""
         try:
@@ -60,7 +59,7 @@ class AutomatedTraining:
             
             while True:
                 try:
-                    # Récupérer un lot de données
+                    
                     query = f"""
                     SELECT text, positive, negative, created_at 
                     FROM liveTweets 
@@ -73,10 +72,10 @@ class AutomatedTraining:
                     if live_data.empty:
                         break
                         
-                    # Transférer le lot vers la table `tweets`
+                    
                     live_data.to_sql('tweets', self.engine, if_exists='append', index=False)
                     
-                    # Supprimer les données transférées de `liveTweets`
+                    
                     dates_str = "','".join(live_data['created_at'].astype(str))
                     with self.engine.connect() as conn:
                         delete_query = text(f"""
@@ -89,7 +88,7 @@ class AutomatedTraining:
                     total_transferred += len(live_data)
                     offset += batch_size
                     
-                    if total_transferred >= 2000:  # Limite à 2000 tweets
+                    if total_transferred >= 2000:  
                         break
                 
                 except OperationalError as e:
@@ -98,7 +97,7 @@ class AutomatedTraining:
                         self.logger.error(f"Error transferring live data after {max_retries} retries: {str(e)}")
                         raise
                     self.logger.warning(f"Retry {retry_count}/{max_retries} after error: {str(e)}")
-                    time.sleep(60)  # Attendre 1 minute avant de réessayer
+                    time.sleep(60) 
             
             if total_transferred > 0:
                 self.logger.info(f"Transferred {total_transferred} most recent records")
@@ -113,11 +112,11 @@ class AutomatedTraining:
         try:
             self.logger.info("Starting scheduled data transfer and model retraining")
             
-            # Transfert des données
+            
             transferred_count = self.transfer_live_data()
             
             if transferred_count > 0:
-                # Réentraînement du modèle avec gestion des erreurs
+                
                 max_retries = 3
                 retry_count = 0
                 
@@ -132,7 +131,7 @@ class AutomatedTraining:
                             self.logger.error(f"Model retraining failed after {max_retries} retries: {str(e)}")
                             raise
                         self.logger.warning(f"Retry {retry_count}/{max_retries} after error: {str(e)}")
-                        time.sleep(60)  # Attendre 1 minute avant de réessayer
+                        time.sleep(60)
             else:
                 self.logger.info("No new data to retrain with")
                 
@@ -163,7 +162,7 @@ if __name__ == "__main__":
     try:
         # Maintenir le script en exécution
         while True:
-            time.sleep(1)  # Réduire l'utilisation du CPU
+            time.sleep(1)  
     except (KeyboardInterrupt, SystemExit):
         print("Stopping automated training scheduler...")
         automated_training.stop()
