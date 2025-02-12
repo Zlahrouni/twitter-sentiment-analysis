@@ -54,12 +54,6 @@ https://www.kaggle.com/datasets/hbaflast/french-twitter-sentiment-analysis?phase
 ```
 (This file is very big, it can't be pushed to Github and is in the gitignore)
 
-## Clone and add data to the project
-
-1. Clone this project from github
-2. Go to the **docker** folder and add the **french_tweets.csv**
-
-
 ## Install the dependecies
 
 1. Install dependencies:
@@ -68,7 +62,9 @@ https://www.kaggle.com/datasets/hbaflast/french-twitter-sentiment-analysis?phase
 pip install -r requirements.txt
 ```
 
-2. Setup MySQL database:
+2. Go to the docker folder and add the french_tweets.csv
+
+3. Setup MySQL database:
 
 ```bash
 open -a Docker
@@ -76,20 +72,20 @@ cd docker
 docker-compose up -d
 ```
 
-3. Import dataset:
+4. Import dataset to the database:
 
 ```bash
 python dataset.py
 ```
 
-4. Train models:
+5. Train models:
 
 ```bash
 cd ..
 python models_train.py
 ```
 
-5. Retrain models:
+6. Retrain models:
 
 ```bash
 cd ..
