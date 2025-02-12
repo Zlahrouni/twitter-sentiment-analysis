@@ -52,7 +52,7 @@ A sentiment analysis model for tweets using logistic regression, with logging an
 ```bash
 https://www.kaggle.com/datasets/hbaflast/french-twitter-sentiment-analysis?phase=FinishSSORegistration&returnUrl=%2Fdatasets%2Fhbaflast%2Ffrench-twitter-sentiment-analysis%2Fversions%2F1%3Fresource%3Ddownload&SSORegistrationToken=CfDJ8L6iRjDIPSpBmzHrPOUWaz0Qc7EZQxDlIH3ojNAiyTq-x7B_UEjscesGAcqbYanO-tmnKCJUJCHf38UJ3GMoCTvW6kGox7C5XvEpvyTM5caRcDLUgMrjGt7mUSDqC_3JvcEYCY8Kh33RzGli-GJaTCiszXlEP-Ur_tYPKdshLsdbe1wt7sScN-zXYThlmYHtJw9qkl7Z5nlpb51g5ZMe-XSdtik18kLfMdE0gzN8r9CdARA-UKj3kYCfQ9ooRUJwKeR_bvq2ttf97KC2h6kKxjkDUp13rlhtRDuTeHwiqJjqO5LKMbWzTu7NCrHttV1EzakNl8uEUysXddDBq-RtSBM&DisplayName=Sara+Bevilacqua&select=french_tweets.csv
 ```
-(This file is very big, it can't be pushed to Githby and is in the gitignore)
+(This file is very big, it can't be pushed to Github and is in the gitignore)
 
 ## Clone and add data to the project
 
