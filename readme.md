@@ -126,7 +126,7 @@ Remove containers:
 docker-compose down -v
 ```
 
-You can find the evaluation report here : [Rapport_evaluation_twitter_sentiment.pdf](Rapport_evaluation_twitter_sentiment.pdf]
+You can find the evaluation report here : [Rapport_evaluation_twitter_sentiment.pdf](Rapport_evaluation_twitter_sentiment.pdf)
 
 
 ## Features
