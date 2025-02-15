@@ -139,7 +139,9 @@ You can find the evaluation report here : [Rapport_evaluation_twitter_sentiment.
 - Docker containerization
 
 ## Authors :
-- Ziad Lahrouni (Model training, Docker Setup, BDD, Dataset)
-- Sara Bevilacqua (Model Training, BDD,  Dataset)
-- Sabrina Tamda (Model Retraining, Dataset)
-- Mohamed Kerraz (API)
+**AI & Docker :**
+- Ziad Lahrouni
+- Sara Bevilacqua
+- Sabrina Tamda
+**API :**
+- Mohamed Kerraz
