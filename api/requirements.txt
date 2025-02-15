@@ -1,0 +1,6 @@
+Flask[Async]
+mysql-connector-python
+pyjson==1.3.0
+requests
+scikit-learn
+joblib
