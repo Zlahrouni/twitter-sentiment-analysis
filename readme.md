@@ -134,3 +134,9 @@ docker-compose down -v
 - Model persistence
 - MySQL database integration
 - Docker containerization
+
+## Authors :
+- Ziad Lahrouni
+- Sara Bevilacqua
+- Sabrina Tamda
+- Mohamed Kerraz
