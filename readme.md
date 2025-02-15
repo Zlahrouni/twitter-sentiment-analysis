@@ -72,7 +72,7 @@ cd docker
 docker-compose up -d
 ```
 
-4. Import dataset to the database:
+4. Import dataset to the database (Take time to lunch):
 
 ```bash
 python dataset.py
@@ -136,7 +136,7 @@ docker-compose down -v
 - Docker containerization
 
 ## Authors :
-- Ziad Lahrouni
-- Sara Bevilacqua
-- Sabrina Tamda
-- Mohamed Kerraz
+- Ziad Lahrouni (Model training, Docker Setup, BDD, Dataset)
+- Sara Bevilacqua (Model Training, BDD,  Dataset)
+- Sabrina Tamda (Model Retraining, Dataset)
+- Mohamed Kerraz (API)
